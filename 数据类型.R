@@ -3,7 +3,7 @@
 
 # 整型integer（数字）
 # 双整型double（数字）
-# 字符型/字符串string（文本）：用''或者""括起来
+# 字符型/字符串character（文本）：用''或者""括起来
 # 逻辑型/逻辑值（布尔值）：TRUE（T）/FALSE（F）
 # 复数类型complex：a+bi
 # 原始类型raw：原始字节，如charToRaw("world")

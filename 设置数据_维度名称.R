@@ -11,69 +11,71 @@ vector1 <- 1:4
 vector1
 dim(vector1)
 names(vector1) <- "a"
-vector1#注意如果名称个数比数据的总数少，未被命名的数据会被自动赋予NA名称
+vector1 #注意如果名称个数比数据的总数少，未被命名的数据会被自动赋予NA名称
 names(vector1) <- c("a","b","c","d")
 vector1
 
 # （二）一维数组
-# (1)设置其中的数据名称：使用names()函数
+# （1）设置其中的数据名称
+# 使用names()函数
 array4 <- array(1:4,4)
 array4
 dim(array4)
 names(array4) <- c("a","b","c","d")
 array4
 
-# (2)经检验，使用dimnames()函数/参数无法为一维数组设置维度名称，下述两条命令会报错
+# (2)设置其中的维度名称
+# （2.1）使用array()函数中的dimnames参数无法为一维数组设置维度名称，下述命令会报错
+
+array4 <- array(1:4,4,dimnames = list("A"))
+# （2.2）使用dimnames()函数无法为一维数组设置维度名称，下述命令会报错
 dimnames(array4) <- list(c("A"))
-array4 <- array(1:4,4,dimnames = list("a"))
-# 看来只有二维及二维以上的对象类型才能设置维度名称
+# 看来只有二维及二维以上的对象类型才能用dimnames()参数/函数设置维度名称
 
 # （三）矩阵（二维数组）
-# （1）设置其中的数据名称：使用names()函数
+# （1）设置其中的数据名称
+# 使用names()函数
 matrix3 <- matrix(1:4,2,2)
 matrix3
 names(matrix3) <- c("a","b","c","d")
 matrix3
 
-# （2）设置其中的维度名称：使用dimnames()函数/参数
-# （2.1）使用dimnames参数
+# （2）设置其中的维度名称
+# （2.1）使用matrix()函数中的dimnames参数
 matrix4 <- matrix(1:4,2,2,dimnames = list(c("A","B"),c("C","D")))
 matrix4
+# 注意：matrix()函数中只有dimnames参数，没有rownames参数和colnames参数
 
 # （2.2）使用dimnames()函数
 matrix4 <- matrix(1:4,2,2)
 dimnames(matrix4) <- list(c("A","B"),c("C","D"))
 matrix4
 
-# （2.3）使用rownames()/colnames()函数
+# （2.3）使用rownames()函数和colnames()函数
 matrix4 <- matrix(1:4,2,2)
 rownames(matrix4) <- list("A","B")
 colnames(matrix4) <- c("C","D")
 matrix4
 
 # （四）三维数组（及其他多维数组）
-# （1）设置其中的数据名称：使用names()函数
+# （1）设置其中的数据名称
+# 使用names()函数
 array5 <- array(1:12,dim = c(3,2,2))
 array5
 names(array5) <- c("a","b","c","d","e","f","g","h","i","j","k","l")
 array5
 
-# （2）设置其中的维度名称：使用使用dimnames()函数/参数
-# （2.1）使用dimnames参数，比照上述矩阵的例子
+# （2）设置其中的维度名称
+# （2.1）使用array()函数中的dimnames参数，比照上述矩阵的例子
 # （2.2）使用dimnames()函数，比照上述矩阵的例子
-# （2.3）注意此时无法使用rownames()/colnames()函数，
-# 其只能适用于矩阵这种二维对象（从其命名也可以看出，只有行row和列col二维）
+# （2.3）注意此时无法使用rownames()/colnames()函数，其只能适用于矩阵这种二维对象（从其命名也可以看出，只有行row和列col两个维度）
 
 # （五）列表
-# （1）设置行名称
-# （1.1）在列表中，直接使用names()函数设置的是行名称而不是其中的数据名称
+# （1）设置行名称：在列表中，直接使用names()函数设置的是行名称而不是其中的数据名称
+# （1.1）使用names()函数
 list2 <- list("apple",1:3,matrix(1:4,2,2),list("orange","purple"))
 list2
 names(list2) <- c("character","vector","matrix","list")
-list2
-# 也可以将上述两步合并为一步：
-list2 <- `names<-`(list("apple",1:3,matrix(1:4,2,2),list("orange","purple")),
-                   c("character","vector","matrix","list"))
 list2
 
 # （1.2）也可以直接在list()函数中用“标签=值”的形式设置行名称
@@ -102,8 +104,8 @@ list2[[3]]
 # 结果将列表第3行的矩阵中的行名称设置为A、B，列名称设置为C、D
 
 # （六）数据框
-# （1）设置列名称
-# （1.1）在数据框中，直接使用names()函数设置的是列名称而不是其中的数据名称
+# （1）设置列名称：直接使用names()函数设置的是列名称而不是其中的数据名称
+# （1.1）使用names()函数
 dataframe2 <- data.frame(c("apple","banana","orange"),1:3)
 dataframe2
 names(dataframe2) <- c("a","b")
@@ -135,17 +137,16 @@ dataframe2[1]
 dataframe2[[1]]
 # 结果没有变化
 
-# （3.2）由于数据框中只可能存储数据，不可能存储多维度的对象，
+# （3.2）由于数据框中只能够存储数据，无法存储多维度的对象，
 # 因此也无法使用dimnames()函数或者rownames()/colnames函数设置其中数据的维度名称
 
-# 余论
-# 注意和rownames()/colnames()函数相比，
-# dimnames()函数默认需要将每个维度的名称都设置好
+# （七）余论
+# dimnames参数的各种设置情况
 # 以三维数组为例：
 # 不设置任何维度名称
 array6.1 <- array(1:12,c(3,2,2))
 array6.1
-# 结果每个维度是默认值[i,j,m]
+# 结果每个维度名称是默认值
 
 # 设置所有维度名称
 array6.2 <- array(1:12,c(3,2,2),list(c("A","B","C"),c("D","E"),c("F","G")))

@@ -35,7 +35,7 @@ factor3 <- factor(c("apple","banana","apple","orange"),labels = c("a","b","c"),o
 # 一维数组的两种定义方式：
 # （1.1）先定义一个向量，再为该向量设置一维维数（长度）：
 array1.1 <- 1:12
-dim(array1_1) <- 12#一维（行）的长度为12，注意此时没有定义二维（列）
+dim(array1.1) <- 12#一维（行）的长度为12，注意此时没有定义二维（列）
 # 等价于：
 array1.1 <- `dim<-` (1:12,12)
 
@@ -115,6 +115,6 @@ rownames(Object_class) <- c("单个数据","向量","因子",
                             "列表","数据框")
 Object_class <- t(Object_class)
 
-write.csv(Object_class,"Object_class.csv",fileEncoding = "GB2312")
+write.csv(Object_class,"对象类型.csv",fileEncoding = "GB2312")
 
 

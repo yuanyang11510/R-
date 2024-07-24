@@ -22,4 +22,4 @@
                               )
 rownames(特殊值) <- c("NA","NULL","(-)Inf","NaN")
 特殊值 <- t(特殊值)
-write.csv(特殊值,"特殊值.csv",fileEncoding = "GB2312")
+write.csv(特殊值,"数据类型（特殊值）.csv",fileEncoding = "GB2312")

@@ -1,0 +1,5 @@
+"","length","is.numeric","test","example"
+"NA",1,FALSE,"is.na()",""
+"NULL",0,FALSE,"is.null()",""
+"(-)Inf",1,TRUE,"is.infinite()","1/0, -1/0"
+"NaN",1,TRUE,"is.nan()","0/0, Inf/Inf, Inf-Inf"

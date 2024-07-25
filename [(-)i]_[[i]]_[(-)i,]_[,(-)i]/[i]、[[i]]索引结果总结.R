@@ -1,4 +1,4 @@
-# [(-)i]和[[(-)i]]结果总结
+# [i]、[[i]]索引结果总结
 library(tidyverse)
 
 index_comparison <- data.frame(

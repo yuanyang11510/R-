@@ -1,4 +1,4 @@
-# 比较[i]和[[i]]的区别
+# 比较[i]和[[i]]在不同对象中的区别
 # 参考https://stackoverflow.com/questions/1169456/the-difference-between-bracket-and-double-bracket-for-accessing-the-el
 
 # （一）在向量、一维数组、矩阵（二维数组）、多维数组中，

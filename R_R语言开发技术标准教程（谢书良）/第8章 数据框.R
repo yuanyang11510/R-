@@ -12,7 +12,7 @@
 
     # 8.2 认识数据框的结构
             str(df.info)
-            # 书中说str()函数给出的结果中会将"Name"和"Sex"两列元素识别为因子，但是经过检验，无论是在RStudio还是在VS Code中，都已经简单地将这两列元素识别为字符串向量，可以通过以下命令进行检验：
+            # 书中说str()函数给出的结果中会将"Name"和"Sex"两列元素识别为因子，但是经过检验，无论是在RStudio还是在VS Code中，都已经简单地将这两列元素识别为字符串向量，因为data.frame()函数已经将参数stringAsFactors默认设置为FALSE，可以通过以下命令进行检验：
             Name.df <- df.info[[1]]
             Sex.df <- df.info[[2]]
             is.factor(Name.df) #结果为FALSE

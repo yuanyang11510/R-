@@ -11,14 +11,14 @@
             b.matrix #设置参数byrow = TRUE，按照行填充数据
 
     # 6.2 查看矩阵对象属性的函数
-             a.matrix <- matrix(1:12,4)
-             b.matrix <- matrix(1:12,4,byrow = TRUE)
-             a.matrix
-             b.matrix
+            a.matrix <- matrix(1:12,4)
+            b.matrix <- matrix(1:12,4,byrow = TRUE)
+            a.matrix
+            b.matrix
 
             #  查看矩阵结构的函数str()
-             str(a.matrix)
-             str(b.matrix) #即使原矩阵是按照行填充数据,查看结构时也是按照列输出数据
+            str(a.matrix)
+            str(b.matrix) #即使原矩阵是按照行填充数据,查看结构时也是按照列输出数据
             
             # 查看矩阵行数的函数nrow()
             nrow(a.matrix)

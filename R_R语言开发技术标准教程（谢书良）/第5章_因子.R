@@ -9,8 +9,8 @@
             fdata1 # 因子水平为1,2,3
             fdata2 # 因子水平依然为1,2,3
 
-            rdata1 <- factor(data, labels = c("I", "II", "III")) # 将默认因子水平1,2,3替换成罗马数字I,II,III
-            rdata2 <- factor(data, labels = c("III", "II", "I")) # 将默认因子水平1,2,3替换成罗马数字III,II,I
+            rdata1 <- factor(data1, labels = c("I", "II", "III")) # 将默认因子水平1,2,3替换成罗马数字I,II,III
+            rdata2 <- factor(data2, labels = c("III", "II", "I")) # 将默认因子水平1,2,3替换成罗马数字III,II,I
             rdata1
             rdata2
 
@@ -20,19 +20,26 @@
 
         # 2. tapply()函数：计算向量在某因子水平上的相应值
             data <- c(1, 2, 3, 3, 1, 2, 2, 3, 1, 3, 2, 1)
-            (rdata <- factor(data, labels = c("I", "II", "III"))) # 在赋值代码外面加上一对括号，可以在这一行运行完后直接输出rdata的值，而不需要通过再运行一行“rdata”代码来输出
+            (rdata <- factor(data, labels = c("I", "II", "III"))) 
+            # 在赋值代码外面加上一对括号，可以在这一行运行完后直接输出rdata的值，而不需要通过再运行一行“rdata”代码来输出
+
             value <- c(18, 20, 23, 32, 15, 17, 22, 21, 27, 30, 26, 22)
-            tapply(value, rdata, mean) # 需要计算的向量为value，元素的分类标准（即因子水平）为rdata，这两个向量的长度一定是相等的，需要应用的函数为mean，注意此时mean后面不能加括号
+            tapply(value, rdata, mean) 
+            # 需要计算的向量为value，元素的分类标准（即因子水平）为rdata，这两个向量的长度一定是相等的，需要应用的函数为mean，注意此时mean后面不能加括号
 
     # 5.3 因子的转换及常见错误解决
             # 例一
             directions <- c("East", "West", "North", "East", "West")
-            directions # 此时各个字符串元素两边有引号标记
-            (three.factor <- factor(directions)) # 可以发现，在因子中的字符串元素两边没有引号标记
-            four.factor1 <- factor(directions, levels = c("East", "West", "South", "North")) # 因子水平可以自定义排序，不需要像默认排序那样按照英文首字母顺序排序（否则顺序应该为East,North,South,West，就像因子three.factor的因子水平一样）
-            four.factor2 <- factor(fourth.factor, levels = c("East", "West", "South", "North"))
+            directions 
+            # 此时各个字符串元素两边有引号标记
+            (three.factor <- factor(directions)) 
+            # 可以发现，在因子中的字符串元素两边没有引号标记
+            four.factor1 <- factor(directions, levels = c("East", "West", "South", "North")) 
+            # 因子水平可以自定义排序，不需要像默认排序那样按照英文首字母顺序排序（否则顺序应该为East,North,South,West，就像因子three.factor的因子水平一样）
+            four.factor2 <- factor(three.factor, levels = c("East", "West", "South", "North"))
             four.factor1 # 转换的对象是一个普通向量，此时赋予其全新的因子水平
             four.factor2 # 转换的对象也可以是另一个带有不同水平的因子，此时改变其原来的因子水平
+            # 另外要注意，参数levels可以不设置原向量/因子中存在的元素名称，也可以设置原向量/因子中不存在的元素名称，在前一种情况，会导致原向量/因子中的元素被替换为NA值，在后一种情况，仅仅会多出一个没有任何元素与之匹配的因子水平
             as.character(four.factor1) # 将因子转换为字符串元素组成的向量，实际即起初的向量directions
             as.numeric(four.factor1) # 将因子转换为数值元素组成的向量，转换的规则是将因子水平East,West,South,North分别转换为1,2,3,4
 

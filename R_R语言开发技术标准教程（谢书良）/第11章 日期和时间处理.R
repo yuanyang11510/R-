@@ -16,7 +16,7 @@
             # %B表示月份的英文全称（month.name）
             as.Date("24/Jan/2020",format = "%d/%b/%Y")
             # %b表示月份的英文缩写（month.abb）
-            # 以上两条结果输出NULL值，应该是和所在地区有关，参考：https://blog.csdn.net/weixin_46623488/article/details/126717501
+            #rfr 以上两条结果输出NULL值，应该是和所在地区有关，参考：https://blog.csdn.net/weixin_46623488/article/details/126717501
             
             as.Date("24/01/2020",format = "%d/%m/%Y")
             # 前后两个参数要做到形式一致，但是输出的结果的形式总是形如"年-月-日"的日期向量
@@ -34,7 +34,7 @@
             x.date
             x.date + 0:40 #列出2020年1月24日及后40天的日期向量
             x.date - 1:5 #列出2020年1月24日前5天的日期向量
-            # 可以发现,日期向量的两边有引号，似乎是字符串向量，但是其可以和数值向量(0:40)、(1:5)相加，又具有数值向量的特点，不过日期向量的加减法不是简单的数值相加，其结果和日历的实际情况是完全一致的
+            #* 可以发现,日期向量的两边有引号，似乎是字符串向量，但是其可以和数值向量(0:40)、(1:5)相加，又具有数值向量的特点，不过日期向量的加减法不是简单的数值相加，其结果和日历的实际情况是完全一致的
 
             # 日期向量可以进行比较，返回逻辑值TRUE或者FALSE
             x.date
@@ -48,7 +48,7 @@
             mode(x.date.test) #输出"numeric"，表示该日期向量的数据类型为数值
             as.numeric(x.date.test) #输出数值1，表示该日期向量代表从1970年1月1日到1970年1月2日过了1天
             # 这也可以解释为什么日期向量可以进行加法运算或者减法运算，并且加减的单位是天数，以及为什么日期向量可以进行比较
-            # 参考：https://blog.csdn.net/namishizi321/article/details/125352247
+            #rfr 参考：https://blog.csdn.net/namishizi321/article/details/125352247
 
         # 2. weekdays()函数
             weekdays(x.date) #输出2020年1月24日是星期几
@@ -67,10 +67,10 @@
         # 1. Sys.time()函数
             Sys.time() #输出目前系统的时间(同时也包含了目前系统的日期)
 
-            # 关于缩写UTC（世界标准时间/世界协调时间）、GMT（格林尼治平时）、CST的介绍，可以参见：https://blog.csdn.net/qq_36944952/article/details/125166155、https://zh.wikipedia.org/wiki/%E6%A0%BC%E6%9E%97%E5%B0%BC%E6%B2%BB%E6%A8%99%E6%BA%96%E6%99%82%E9%96%93、https://blog.csdn.net/namishizi321/article/details/125352247，其中CST可以代表四个不同的时间：Central Standard Time (USA) UT-6:00（美国中部时间）、Central Standard Time (Australia) UT+9:30（澳大利亚中部时间）、China Standard Time UT+8:00（中国标准时间）、Cuba Standard Time UT-4:00（古巴标准时间）
+            #rfr 关于缩写UTC（世界标准时间/世界协调时间）、GMT（格林尼治平时）、CST的介绍，可以参见：https://blog.csdn.net/qq_36944952/article/details/125166155、https://zh.wikipedia.org/wiki/%E6%A0%BC%E6%9E%97%E5%B0%BC%E6%B2%BB%E6%A8%99%E6%BA%96%E6%99%82%E9%96%93、https://blog.csdn.net/namishizi321/article/details/125352247，其中CST可以代表四个不同的时间：Central Standard Time (USA) UT-6:00（美国中部时间）、Central Standard Time (Australia) UT+9:30（澳大利亚中部时间）、China Standard Time UT+8:00（中国标准时间）、Cuba Standard Time UT-4:00（古巴标准时间）
 
         # 2. as.POSIXct()函数
-        # "ct"是"calendar time"的缩写，关于POSIX，可以参考：https://blog.csdn.net/namishizi321/article/details/125352247
+        #rfr "ct"是"calendar time"的缩写，关于POSIX，可以参考：https://blog.csdn.net/namishizi321/article/details/125352247
             # 最简单的方式是直接输入形如"年-月-日 时:分:秒"的时间参数
             as.POSIXct("2024-7-29 23:59:59")
 
@@ -83,7 +83,7 @@
 
             # 参数法二
             as.POSIXct(3600,tz = "GMT",origin = "2016-01-01")
-            # 表示从格林尼治平时（如果不需要严格区分，可以视作世界标准时间UTC）下的2016年1月1日零时起算3600秒，也即1个小时之后的时间向量，即2016年1月1日01:00:00
+            # 表示从格林尼治平时（如果不需要严格区分，可以视作世界标准时间UTC，可以参考上文关于UTC、GMT、CST等缩写的链接）下的2016年1月1日零时起算3600秒，也即1个小时之后的时间向量，即2016年1月1日01:00:00
 
             # 时间向量可以进行加法或者减法运算，加减的单位是秒数
             xct.Time + 330
@@ -101,7 +101,7 @@
             as.numeric(xct.test) #输出数值60，表示该日期向量代表从1970年1月1日8:00:00到1970年1月1日8:01:00过了60秒，此处是从1970年的8点整起算，这是因为中国处于东八区，可以通过Sys.timezone()获取当前系统时区
             Sys.timezone()
             # 这也可以解释为什么时间向量可以进行加法运算或者减法运算，并且加减的单位是秒数，以及为什么时间向量可以进行比较
-            # 参考：https://blog.csdn.net/namishizi321/article/details/125352247
+            #rfr 参考：https://blog.csdn.net/namishizi321/article/details/125352247
 
         # 3. as.POSIXlt()函数
         # "lt"是"local time"的缩写
@@ -133,11 +133,11 @@
             xlt.test$isdst #不使用夏令时（Daylight Saving Time）（正数表示使用，0表示不适用，负数表示未知）
             xlt.test$zone #当前所在时区为中国标准时间（China Standard Time UT+8:00）
             xlt.test$gmtoff #与格林尼治平时之间的时间差未知（在本初子午线以东为正数，NA表示未知，0通常也表示未知）
-            # 参考：https://blog.csdn.net/namishizi321/article/details/125352247
+            #rfr 参考：https://blog.csdn.net/namishizi321/article/details/125352247
 
     # 11.3 时间序列
     # 时间序列(ts,来自"time series"的缩写)是一种特殊的对象，可以看成是在原向量或者矩阵的基础上加入时间刻度，可以用来体现数据随时间的变化情况
-    # 书中提到也可以适用于三维数组，但经过检验，ts()函数无法适用于三维数组，其定义中也提到只适用于向量或者矩阵，适用于数据框时，会首先将数据框转换为矩阵
+    #? 书中提到也可以适用于三维数组，但经过检验，ts()函数无法适用于三维数组，其定义中也提到只适用于向量或者矩阵，适用于数据框时，会首先将数据框转换为矩阵
             # 适用于向量
             cj <- c(89,75,83,91)
             cj.info <- ts(cj,start = c(2016,2),frequency = 4)

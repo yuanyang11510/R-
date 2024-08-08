@@ -16,12 +16,12 @@
             length(x)
             length(x1)
             length(x2)
-            # 可以发现，字符串向量的长度和单个字符串本身包含字符的数量无关，而和其中字符串的数量有关
+            # 可以发现，字符串向量的长度和单个字符串本身包含字符的数量无关，而和其中字符串元素的数量有关
 
             nchar(x)
             nchar(x1)
             nchar(x2)
-            # nchar()函数可用于计算字符串向量对象每一个元素的字符数
+            # nchar()函数可用于计算字符串向量对象每一个字符串元素的字符数
 
     # 10.2 字符串的处理
         # 1. 语句的分割
@@ -29,7 +29,7 @@
             x
             strsplit(x,"") #将字符串以字符为单位分割
             strsplit(x," ") #将字符串以空格为界分割
-            # 可以发现，strsplit()函数输出的结果是一个列表，上述strsplit()函数分割的字符串向量中只有一个元素，如果有多个元素，结果会更加明显：
+            #* 可以发现，strsplit()函数输出的结果是一个列表，上述strsplit()函数分割的字符串向量中只有一个元素，如果有多个元素，结果会更加明显：
             x.test <- c("Hello","The beautiful Beijing")
             x.test
             strsplit(x.test,"")
@@ -51,7 +51,7 @@
             paste("Hello","The","beautiful","Beijing")
             # 原字符串中的不同元素被连接起来，因为供连接的元素直接被列举出来，而不再是一个包含了多个字符串元素的向量
 
-            # 关于paste()函数以及其他一些相关函数的讨论，可以参考文件“c()、append()、cat()、paste()、paste0().R”
+            #rfr 关于paste()函数以及其他一些相关函数的讨论，可以参考文件“c()、append()、cat()、paste()、paste0().R”
 
         # 4. 字符串的排序
             x <- c("China","America","France","Russia","Britain")
@@ -66,14 +66,14 @@
             grep("S",st) #输出原向量中带有字符"S"的所有元素的下标
             st[grep("S",st)] #将grep()函数的结果和“[]”符号搭配使用，就可以筛选出满足相应条件的元素
 
-            # 关于一些相关函数grep()、grepl()、sub()、gsub()的介绍，可以参考：https://blog.csdn.net/qq_18055167/article/details/123467403
-            # 关于这类函数中的正则表达式，可以参考：https://blog.csdn.net/lhf_tiger/article/details/9280549?utm_medium=distribute.pc_relevant.none-task-blog-2~default~baidujs_baidulandingword~default-0-9280549-blog-123467403.235^v43^pc_blog_bottom_relevance_base7&spm=1001.2101.3001.4242.1&utm_relevant_index=3
+            #rfr 关于一些相关函数grep()、grepl()、sub()、gsub()的介绍，可以参考：https://blog.csdn.net/qq_18055167/article/details/123467403
+            #rfr 关于这类函数中的正则表达式，可以参考：https://blog.csdn.net/lhf_tiger/article/details/9280549?utm_medium=distribute.pc_relevant.none-task-blog-2~default~baidujs_baidulandingword~default-0-9280549-blog-123467403.235^v43^pc_blog_bottom_relevance_base7&spm=1001.2101.3001.4242.1&utm_relevant_index=3
 
         # 2. 搜索分类字符串
             st <- c("ch6.xls","ch7.xls","ch7.xls","ch7.c","ch7.doc","ch8.xls","(ch8.xls)")
             st
             st[grep("ch(6|7).xls",st)] #匹配两种元素形式：ch6.xls和ch7.xls
-            # 注意，正则表达式只需要在最后用引号括起来即可
+            #* 注意，正则表达式只需要在最后用引号括起来即可
 
             # 以下展示一些更复杂的正则表达式
             st[grep("c.*c",st)] #匹配所有的以"c"开头，以"c"结尾的元素元素
@@ -87,8 +87,8 @@
         # 3. 搜索部分字符可重复的字符串
             st <- c("ch.doc","ch7.doc","ch77.doc","ch78.doc","ch88.doc","9.xls","c9.xls","ch87.doc")
             st
-            st[grep("ch(7*|8*).doc",st)] #注意这一条正则表达式"(7*|8*)"的意思是匹配【零个或者多个"7"】或者【零个或者多个"8"】，比如"","7","88","777"等
-            st[grep("ch(7|8)*.doc",st)] #注意这一条正则表达式"(7*|8*)"的意思是匹配【"7"和"8"组合成的字符串，其中"7"和"8"都可以出现零次或者多次】，比如"7","8","78","87","77","888","88788"，可见，上一条正则表达式匹配的形式是这一条正则表达式匹配的形式的子集
+            st[grep("ch(7*|8*).doc",st)] #*注意这一条正则表达式"(7*|8*)"的意思是匹配【零个或者多个"7"】或者【零个或者多个"8"】，比如"","7","88","777"等
+            st[grep("ch(7|8)*.doc",st)] #*注意这一条正则表达式"(7*|8*)"的意思是匹配【"7"和"8"组合成的字符串，其中"7"和"8"都可以出现零次或者多次】，比如"7","8","78","87","77","888","88788"，可见，上一条正则表达式匹配的形式是这一条正则表达式匹配的形式的子集
             st[grep("ch(7+|8+).doc",st)]
 
 

@@ -39,12 +39,13 @@
             df.Newinfo.row <- rbind(df.info,matrix.addrow)
             # 结果会报错，报错原因：names do not match previous names
 
-            # 为该矩阵设置和原数据框同样的列名称
+            ## 解决办法：为该矩阵设置和原数据框【同样】的列名称
             colnames(matrix.addrow) <- c("Name","Sex","Age","Height","Weight")
             matrix.addrow
             df.Newinfo.row <- rbind(df.info,matrix.addrow)
             df.Newinfo.row
 
+            ## 再次验证：为该矩阵设置和原数据框【不同】的列名称
             colnames(matrix.addrow) <- c("Name_1","Sex_1","Age_1","Height_1","Weight_1")
             matrix.addrow
             df.Newinfo.row <- rbind(df.info,matrix.addrow)
@@ -53,11 +54,11 @@
             # 增加的部分用数据框表示
             df.addrow <- data.frame(Name="张斌",Sex="男",Age=12,Height=166,Weight=52.5)
             df.addrow
-            df.Newinfo.row <- rbind(df.info,df.addinfo)
-            # 结果会报错
+            df.Newinfo.row <- rbind(df.info,df.addrow)
+            df.Newinfo.row
 
-            #* 可以发现，通过rbind()函数为数据框增加行数据，增加的部分既可以表达成向量，也可以表达成矩阵（但是需要矩阵的列名称和原数据框相同），但不能表达成数据框，即使新的数据框的列名称和原数据框相同，结果依然会报错
-
+            #* 可以发现，通过rbind()函数为数据框增加行数据，增加的部分既可以表达成向量，也可以表达成矩阵（但是需要矩阵的列名称和原数据框相同），也可以表达成数据框
+            
     # 8.5 增加数据框的列数据
             # 增加的部分用向量表示
             df.Newinfo.col <- cbind(df.info,c(88,91,75,80,95))

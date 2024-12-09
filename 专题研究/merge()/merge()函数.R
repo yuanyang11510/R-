@@ -65,6 +65,7 @@ merge(w,q,by = "name")
 merge(w, q, all=TRUE, sort=TRUE)
 # “all=TRUE”表示选取w, q数据集的所有行，“sort=TRUE”表示按by列（所有公共列中的第一列，此处是name列）进行排序，默认升序
 ## 虽然上述命令没有明确连接列（by列），但是默认取w和q公共列中的第一列，下同
+## 由于sort参数默认为TRUE，因此此处可以略去
 
 # （三）left匹配模式
 merge(w ,q ,all.x=TRUE,sort=TRUE)

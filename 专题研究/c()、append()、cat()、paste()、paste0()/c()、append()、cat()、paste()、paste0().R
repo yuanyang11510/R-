@@ -34,7 +34,7 @@
     # 顺便可以讨论一下print()函数、cat()函数（以上两者都属于输出函数）、return()语句三者的区别
     #rfr 参考：https://cloud.tencent.com/developer/article/1674178、https://stackoverflow.com/questions/35773027/difference-of-print-and-return-in-r、https://blog.csdn.net/weixin_44115606/article/details/107433271
     # print()函数输出（也叫打印）一个值并返回这个值
-    # cat()函数输出一个值，这一点和print()函数相同，但返回值为NULL，因此如果将该命令的结果赋值给一个变量，这个变量输出的永远都是NULL值
+    # cat()函数输出一个值，这一点和print()函数相同，但返回值为NULL，因此如果将该命令的结果赋值给一个变量，这个变量输出的永远都是NULL值，如果想要赋值，需要使用paste(0)函数（见下文）
     # return()语句通常出现在自定义的函数当中，返回一个值，并且结束函数的运行，但并不会输出这个值
     
     print(1)

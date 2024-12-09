@@ -50,6 +50,3 @@ duplicate_name # dt1中的出现次超过一次的数据以及其出现的次数
 
 duplicate_data <- dt1[dt1$name %in% duplicate_name$name,]
 duplicate_data
-
-
-

@@ -77,7 +77,7 @@ merge(w, q, by='name', all.x=TRUE, sort=TRUE)
 # 左连接：设置“all.x=TRUE”，结果只显示w的name列所有行的值（q的F行不显示）
 ## 可以发现，纯数字列中的缺失值两边没有尖括号（NA），而包含字符串的列中的缺失值两边有尖括号（<NA>）
 
-# (四)right匹配模式 
+# （四）right匹配模式 
 merge(w ,q ,by='name', all.y=TRUE,sort=TRUE)
 # 多个公共列，指定连接列 
 # 右连接：设置“all.y=TRUE”，结果只显示q的name列所有行的值（w的D行不显示）

@@ -20,75 +20,150 @@
 #* suffixes：指定除by外相同列名的后缀
 #* incomparables：指定by中哪些单元不进行合并
 
+# 创建表格w
+w1 <- data.frame(name = c('A','B','A','A','C','D'), 
+school = c('s1','s2','s1','s1','s1','s3'), 
+class = c(10, 5, 4, 11, 1, 8), 
+English = c(85, 50, 90 ,90, 12, 96))
+w1
 
-# 创建数据集w
-name <- c('A','B','A','A','C','D')
-school <- c('s1','s2','s1','s1','s1','s3')
-class <- c(10, 5, 4, 11, 1, 8)
-English <- c(85, 50, 90 ,90, 12, 96)
-w <- data.frame(name, school, class, English)
-w
+# 创建表格q
+q1 <- data.frame(name = c('A','B','C','F'), 
+school = c('s3','s2','s1','s2'), 
+class = c(5, 5, 1,3), 
+maths = c(80,89,55,90), 
+English = c(88, 89, 32, 89))
+q1
 
-# 同上创建数据集q
-name  <-  c('A','B','C','F')
-school <- c('s3','s2','s1','s2')
-class <- c(5, 5, 1,3)
-maths <- c(80,89,55,90)
-English <- c(88, 89, 32, 89)
-q <- data.frame(name, school, class, maths, English)
-q
-
-# 查看两个数据表的维度
+# 查看两张表格的维度
 dim(w);dim(q)
 
-# 查看两个数据集的列名称
-names(w);names(q)# 可以看出两个数据集有公共列
+# 查看两张表格的列名称
+names(w);names(q)
 
-# （一）inner匹配模式：只显示两个数据集公共列中均有的行
-# （1）有多个公共列时，需指出使用哪一列作为连接列
-merge(w,q,by=intersect(names(w)[1],names(q)[1]))
-#! 注意，连接列（by列）只能包含一列
-merge(w,q,by=intersect(names(w),names(q)),sort=TRUE)
-## 上述命令的结果不会给出任何行的值
+# （一）inner匹配模式
+# 只需指出连接列/连接列组（以下若无需要，统称“连接列”）即可，结果只显示两张表格连接列中均有的行
+#* 该模式的本质是在两张表格之间【按照连接列】取交集，应用inner匹配模式时，两张表格一般存在公共列名，但这并非必须：应用inner匹配模式真正重要的前提是两张表格至少存在一条【公共列】，而非至少存在一个【公共列名】，因为inner匹配模式的作用原理是基于公共列的内容（至少一个公共数据），而非公共列的名称
 
-# （2）当两个数据集连接列名称相同时，直接用"by.x"、"by.y"指定连接列：merge(w,q,by.x = 'name', by.y = 'name') 
-merge(w,q,by.x="name",by.y="name")
+# （甲）两张表格存在公共列名
+# （1）直接使用by参数指定连接列的名称
+# （1.1）指定一个连接列（name列）
+merge(w1,q1,by="name")
+# （1.2）指定两个连接列（name列和school列）
+merge(w1,q1,by=c("name","school"))
+# （1.3）指定三个连接列（name列、school列和class列）
+merge(w1,q1,by=c("name","school","class"))
+# （1.4）指定四个连接列（name列、school列、class列和English列）
+merge(w1,q1,by=c("name","school","class","English"))
+#* 可以发现随着连接列的增加，表格的数据【可能】会变少甚至变为0：这是因为连接列越多，相同的连接列组【可能】会越少
 
-# （3）当两个数据集均有连接列时，直接指定连接列的名称：merge(w,q,by = 'name') ，比如此处：by = "name"
-merge(w,q,by = "name")
+# （2）使用intersect函数提取公共列名，搭配by参数指定连接列
+intersect_w1_q1 <- intersect(names(w1),names(q1)) # w和q共存在4个公共列名，intersect函数表示取交集
+# （2.1）指定一个连接列（name列）
+merge(w1,q1,by=intersect_w1_q1[1])
+# （2.2）指定两个连接列（name列和school列）
+merge(w1,q1,by=intersect_w1_q1[c(1,2)])
+# （2.3）指定三个连接列（name列、school列和class列）
+merge(w1,q1,by=intersect_w1_q1[c(1,2,3)])
+# （2.4）指定四个连接列（name列、school列、class列和English列）
+merge(w1,q1,by=intersect_w1_q1)
+#* 情况和（1）相同
 
-## 以上三种方式得到的结果相同
-# 连接列置于第1列；有多个公共列时，在公共列后加上x，y表示数据来源，“.x”表示来源于数据集w，“.y”表示来源于数据集q 
-# 数据集中w中的D行（第6行）不显示，数据集中q中的F行（第4行）不显示，只显示公有的A、B、C行（w的第1--5行和q的第1--3行），并且用q数据集的A行（第1行）匹配了w数据集所有的A行（第1、3、4行）
+# （3）使用by.x、by.y参数指定连接列在两张表格中各自对应的列名，此时要求by.x和by.y参数各自指定的列名是一一对应的，即各自的数量是相等的
+# （3.1）指定一个连接列（name列）
+merge(w1,q1,by.x="name",by.y="name")
+# （3.2）指定两个连接列（name列和school列）
+merge(w1,q1,by.x=c("name","school"),by.y=c("name","school"))
+# （3.3）指定三个连接列（name列、school列和class列）
+merge(w1,q1,by.x=c("name","school","class"),by.y=c("name","school","class"))
+# （3.4）指定四个连接列（name列、school列、class列和English列）
+merge(w1,q1,by.x=c("name","school","class","English"),by.y=c("name","school","class","English"))
+# 情况和（1）（2）相同
 
-# （二）outer匹配模式：将两张表的数据汇总，表中原来没有的数据置为空
-merge(w, q, all=TRUE, sort=TRUE)
-# “all=TRUE”表示选取w, q数据集的所有行，“sort=TRUE”表示按by列（所有公共列中的第一列，此处是name列）进行排序，默认升序
-## 虽然上述命令没有明确连接列（by列），但是默认取w和q公共列中的第一列，下同
-## 由于sort参数默认为TRUE，因此此处可以略去
+#* 以上三种方式得到的结果相同，可以发现，在两张表格存在公共列名时，直接使用by参数指定连接列是最方便的做法
+#* 连接列（组）置于合并后的表格的开头；对于其他没有被指定为连接列的公共列名，合并后的表格会在这部分公共列名后加上x，y表示数据来源，“.x”表示来源于w，“.y”表示来源于q 
+#* 在（1.1）、（2.1）、（3.1）中，w中的D行（第6行）不显示，q中的F行（第4行）不显示，只显示公共的A、B、C行（w的第1--5行和q的第1--3行），并且用q数据集的A行（第1行）匹配了w数据集所有的A行（第1、3、4行）
+## 即x和y参数的顺序会影响合并结果：总是用y表格去匹配x表格
+
+# （乙）两张表格不存在公共列名
+w2 <- w1
+names(w2) <- c("name_1","school_1","class_1","English_1")
+q2 <- q1
+names(q2) <- c("name_2","school_2","class_2","maths","English_2")
+
+# （1）此时无法直接使用by参数，因为使用by参数的前提是两张表格存在【公共列名】
+
+# （2）此时无法使用intersect函数，因为其结果不包含任何数据
+
+# （3）使用by.x、by.y参数时，会以by.x参数指定的列名作为合并后表格的列名
+# （3.1）指定一个连接列（name_1列）
+merge(w2,q2,by.x="name_1",by.y="name_2")
+# （3.2）指定两个连接列（name_1列和school_1列）
+merge(w2,q2,by.x=c("name_1","school_1"),by.y=c("name_2","school_2"))
+# （3.3）指定三个连接列（name列、school列和class列）
+merge(w2,q2,by.x=c("name_1","school_1","class_1"),by.y=c("name_2","school_2","class_2"))
+# （3.4）指定四个连接列（name列、school列、class列和English列）
+merge(w2,q2,by.x=c("name_1","school_1","class_1","English_1"),by.y=c("name_2","school_2","class_2","English_2"))
+#* 结果显示，合并后的表格不再显示name_2列、school_2列、class_2列、English_2列，但是这些列在相应的情况下确实参与了和name_1列、school_1列、class_1列、English_1列的合并
+
+## 总结一下，当两张表格存在公共列名时，使用by参数直接指定连接列是最方便的做法，当两张表格不存在公共列名时，只能分别使用by.x参数和by.y参数指定连接列
+
+# （二）outer匹配模式
+# 设置all=TRUE参数，但是不指定连接列，表中原来没有的数据置为空
+#* 该模式的本质是在两张表格之间取并集，outer匹配模式的作用原理决定了其不需要指定连接列
+# “all=TRUE”表示选取w, q数据集的所有行，“sort=TRUE”表示按连接列进行排序，默认升序
+#* 由于sort参数默认为TRUE，因此可以略去，下同
+merge(w1,q1,all=TRUE,sort=TRUE)
+
+## 至此可以得出一个结论：inner匹配模式和outer匹配模式可以看作是相互冲突的：如果设置了连接列，就不宜再设置all=TRUE参数，如果设置了all=TRUE参数，就不宜再设置连接列
 
 # （三）left匹配模式
-merge(w ,q ,all.x=TRUE,sort=TRUE)
-# 多个公共列，未指定连接列（by列），建议使用【指定了连接列】的情况
-# 左连接，设置“all.x=TRUE”，结果只显示数据w的列及w在q数据集中没有的列
+# （1）左连接，设置all.x=TRUE，且未指定连接列
+#* 和outer匹配模式相比，这种情况只是在两张表格取并集的基础上，将数据限制在x表格的所有行上
+merge(w1,q1,all.x=TRUE,sort=TRUE)
 
-merge(w, q, by='name', all.x=TRUE, sort=TRUE)
-# 多个公共列，指定连接列（by列）
-# 左连接：设置“all.x=TRUE”，结果只显示w的name列所有行的值（q的F行不显示）
+# （2）设置all.x=TRUE，且指定连接列（name列）
+#* 和inner匹配模式相比，这种情况只是在两张表格【按照连接列】取交集的基础上，再加上x表格中在连接列中存在、而y表格在连接列中不存在的行
+merge(w1,q1,by='name',all.x=TRUE,sort=TRUE)
 ## 可以发现，纯数字列中的缺失值两边没有尖括号（NA），而包含字符串的列中的缺失值两边有尖括号（<NA>）
 
 # （四）right匹配模式 
-merge(w ,q ,by='name', all.y=TRUE,sort=TRUE)
-# 多个公共列，指定连接列 
-# 右连接：设置“all.y=TRUE”，结果只显示q的name列所有行的值（w的D行不显示）
+# （1）右连接：设置all.y=TRUE，且未指定连接列
+#* 和outer匹配模式相比，这种情况只是在两张表格取并集的基础上，将数据限制在y表格的所有行上
+merge(w1,q1,all.y=TRUE)
+
+# （2）设置all.y=TRUE，且指定连接列（name列）
+#* 和inner匹配模式相比，这种情况只是在两张表格【按照连接列】取交集的基础上，再加上y表格中在连接列中存在、而x表格在连接列中不存在的行
+merge(w1,q1,by='name',all.y=TRUE,sort=TRUE)
 
 # 实际应用：实现excel中vlookup函数的功能
-dt1 <- data.frame(a=c("A","B","C","D"),b=c(1,2,3,4))
+# 例一：
+dt1 <- data.frame(a=c("A","B","C","D"),b=c(1,2,3,4),c=c("甲","乙","丙","丁"))
 dt1
 
-dt2 <- data.frame(a=c("B","C","A","D"))
+dt2 <- data.frame(a=c("B","C","A","F","A","C","E"))
 dt2
 
-merge(dt2,dt1,sort=FALSE) # 用dt1匹配dt2
+# 用dt1匹配dt2
+merge(dt2,dt1,sort=FALSE) # inner匹配
+merge(dt2,dt1,all.x=TRUE,sort=FALSE) # left匹配
+# 由于此处dt1和dt2的公共列只有一条a列，因此在merge函数中可以不写出来
 
+# 例二：
+dt3 <- data.frame(a=c("A","B","C","D"),b=c(1,2,3,4),c=c("甲","乙","丙","丁"))
+dt3
 
+dt4 <- data.frame(a=c("B","C","A","F","A","C","E"),b=c(2,1,1,3,4,2,2))
+dt4
+
+merge(dt4,dt3,by="a",sort=FALSE)
+merge(dt4,dt3,by="b",sort=FALSE)
+merge(dt4,dt3,by=c("a","b"),sort=FALSE)
+merge(dt4,dt3,sort=FALSE)
+# 以上inner匹配，选取的连接列不同
+## 还可以注意到最后两条命令的结果相同，说明如果不明确写出连接列，则默认连接列是所有的公共列
+merge(dt4,dt3,by="a",all.x=TRUE,sort=FALSE)
+merge(dt4,dt3,by="b",all.x=TRUE,sort=FALSE)
+merge(dt4,dt3,by=c("a","b"),all.x=TRUE,sort=FALSE)
+merge(dt4,dt3,all.x=TRUE,sort=FALSE)
+# 以上left匹配，选取的连接列不同
